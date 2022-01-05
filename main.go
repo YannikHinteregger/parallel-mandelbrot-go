@@ -36,7 +36,7 @@ const (
 	imgHeight  = 1024
 	pixelTotal = imgWidth * imgHeight
 
-	maxIter = 1000
+	maxIter = 500
 	samples = 200
 
 	numBlocks  = 64
