@@ -37,7 +37,7 @@ const (
 	pixelTotal = imgWidth * imgHeight
 
 	maxIter = 500
-	samples = 200
+	samples = 1 // 200
 
 	numBlocks  = 64
 	numThreads = 16
@@ -133,13 +133,15 @@ func workBufferInit(workBuffer chan WorkItem) {
 }
 
 func workersInit(drawBuffer chan Pix, workBuffer chan WorkItem, threadBuffer chan bool) {
+	// initialise threads
 	for i := 1; i <= numThreads; i++ {
 		threadBuffer <- true
 	}
 
+	// start for thread
+	// and wait for another thread to finish
 	for range threadBuffer {
 		workItem := <-workBuffer
-
 		go workerThread(workItem, drawBuffer, threadBuffer)
 	}
 }
@@ -185,9 +187,7 @@ func mandelbrotIteration(a, b float64, maxIter int) (float64, int) {
 		if xx+yy > 4 {
 			return xx + yy, i
 		}
-		// xn+1 = x^2 - y^2 + a
 		x = xx - yy + a
-		// yn+1 = 2xy + b
 		y = 2*xy + b
 	}
 
@@ -200,7 +200,6 @@ func pixelColor(r float64, iter int) color.RGBA {
 	// validar se está dentro do conjunto
 	// https://pt.wikipedia.org/wiki/Conjunto_de_Mandelbrot
 	if r > 4 {
-		// return hslToRGB(float64(0.70)-float64(iter)/3500*r, 1, 0.5)
 		return hslToRGB(float64(iter)/100*r, 1, 0.5)
 	}
 
