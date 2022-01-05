@@ -37,7 +37,7 @@ const (
 	pixelTotal = imgWidth * imgHeight
 
 	maxIter = 500
-	samples = 1 // 200
+	samples = 100 // 200
 
 	numBlocks  = 64
 	numThreads = 16

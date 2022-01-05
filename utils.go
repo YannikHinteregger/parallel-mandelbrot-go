@@ -2,7 +2,6 @@ package main
 
 import (
 	"image/color"
-	"log"
 	"time"
 )
 
@@ -12,14 +11,11 @@ var randState = uint64(time.Now().UnixNano())
 
 func RandUint64() uint64 {
 	randState = ((randState ^ (randState << 13)) ^ (randState >> 7)) ^ (randState << 17)
-	log.Println(randState)
 	return randState
 }
 
 func RandFloat64() float64 {
-	rand := float64(RandUint64()/2) / (1 << 63)
-	log.Println(rand)
-	return rand
+	return float64(RandUint64()/2) / (1 << 63)
 }
 
 func hueToRGB(p, q, t float64) float64 {
