@@ -82,9 +82,9 @@ func run() {
 	threadBuffer := make(chan bool, numThreads)
 	drawBuffer := make(chan Pix, pixelTotal)
 
-	workBufferInit(workBuffer)
+	go workBufferInit(workBuffer)
 	go workersInit(drawBuffer, workBuffer, threadBuffer)
-	go drawThread(drawBuffer, win)
+	go drawThread(drawBuffer)
 
 	for !win.Closed() {
 		pic := pixel.PictureDataFromImage(img)
@@ -150,7 +150,7 @@ func workerThread(workItem WorkItem, drawBuffer chan Pix, threadBuffer chan bool
 			for k := 0; k < samples; k++ {
 				a := height*ratio*((float64(x)+RandFloat64())/float64(imgWidth)) + posX
 				b := height*((float64(y)+RandFloat64())/float64(imgHeight)) + posY
-				c := pixelColor(mandelbrotIteraction(a, b, maxIter))
+				c := pixelColor(mandelbrotIteration(a, b, maxIter))
 				colorR += int(c.R)
 				colorG += int(c.G)
 				colorB += int(c.B)
@@ -169,14 +169,14 @@ func workerThread(workItem WorkItem, drawBuffer chan Pix, threadBuffer chan bool
 	threadBuffer <- true
 }
 
-func drawThread(drawBuffer chan Pix, win *pixelgl.Window) {
+func drawThread(drawBuffer chan Pix) {
 	for i := range drawBuffer {
 		img.SetRGBA(i.x, i.y, color.RGBA{R: i.cr, G: i.cg, B: i.cb, A: 255})
 		pixelCount++
 	}
 }
 
-func mandelbrotIteraction(a, b float64, maxIter int) (float64, int) {
+func mandelbrotIteration(a, b float64, maxIter int) (float64, int) {
 	var x, y, xx, yy, xy float64
 
 	for i := 0; i < maxIter; i++ {
