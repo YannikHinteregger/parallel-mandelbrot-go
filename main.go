@@ -59,8 +59,6 @@ func main() {
 
 func run() {
 	log.Println("Initial processing...")
-	pixelCount = 0
-	img = image.NewRGBA(image.Rect(0, 0, imgWidth, imgHeight))
 	cfg := pixelgl.WindowConfig{
 		Title:  "Parallel Mandelbrot in Go",
 		Bounds: pixel.R(0, 0, imgWidth, imgHeight),
@@ -69,9 +67,15 @@ func run() {
 	}
 
 	win, err := pixelgl.NewWindow(cfg)
+
+	pixelCount = 0
+	img = image.NewRGBA(image.Rect(0, 0, imgWidth, imgHeight))
+	setWhiteBG(img)
+
 	if err != nil {
 		panic(err)
 	}
+
 	log.Println("Rendering...")
 	start := time.Now()
 	workBuffer := make(chan WorkItem, numBlocks)
@@ -100,6 +104,14 @@ func run() {
 			if closeOnEnd {
 				break
 			}
+		}
+	}
+}
+
+func setWhiteBG(img *image.RGBA) {
+	for x := 0; x < imgWidth-1; x++ {
+		for y := 0; y < imgHeight-1; y++ {
+			img.Set(x, y, color.White)
 		}
 	}
 }
