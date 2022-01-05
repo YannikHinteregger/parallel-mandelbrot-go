@@ -119,7 +119,8 @@ func setWhiteBG(img *image.RGBA) {
 func workBufferInit(workBuffer chan WorkItem) {
 	var sqrt = int(math.Sqrt(numBlocks))
 
-	for i := sqrt - 1; i >= 0; i-- {
+	//for i := sqrt - 1; i >= 0; i-- {
+	for i := 0; i < sqrt; i++ {
 		for j := 0; j < sqrt; j++ {
 			workBuffer <- WorkItem{
 				initialX: i * (imgWidth / sqrt),
