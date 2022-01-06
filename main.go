@@ -32,14 +32,14 @@ const (
 	posY   = -1.2
 	height = 2.5
 
-	imgWidth   = 1024
-	imgHeight  = 1024
+	imgWidth   = 1023
+	imgHeight  = 1023
 	pixelTotal = imgWidth * imgHeight
 
 	maxIter = 500
 	samples = 100 // 200
 
-	numBlocks  = 640
+	numBlocks  = 128
 	numThreads = 16
 
 	ratio = float64(imgWidth) / float64(imgHeight)
