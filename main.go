@@ -39,7 +39,7 @@ const (
 	maxIter = 500
 	samples = 100 // 200
 
-	numBlocks  = 64
+	numBlocks  = 1024
 	numThreads = 16
 
 	ratio = float64(imgWidth) / float64(imgHeight)
