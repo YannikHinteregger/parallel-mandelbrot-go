@@ -58,7 +58,7 @@ func main() {
 }
 
 func run() {
-	log.Println("Initial processing...")
+	log.Println("Initialise processing...")
 	cfg := pixelgl.WindowConfig{
 		Title:  "Parallel Mandelbrot in Go",
 		Bounds: pixel.R(0, 0, imgWidth, imgHeight),
@@ -67,14 +67,13 @@ func run() {
 	}
 
 	win, err := pixelgl.NewWindow(cfg)
+	if err != nil {
+		panic(err)
+	}
 
 	pixelCount = 0
 	img = image.NewRGBA(image.Rect(0, 0, imgWidth, imgHeight))
 	setWhiteBG(img)
-
-	if err != nil {
-		panic(err)
-	}
 
 	log.Println("Rendering...")
 	start := time.Now()
@@ -119,15 +118,16 @@ func setWhiteBG(img *image.RGBA) {
 func workBufferInit(workBuffer chan WorkItem) {
 	var sqrt = int(math.Sqrt(numBlocks))
 
-	//for i := sqrt - 1; i >= 0; i-- {
 	for i := 0; i < sqrt; i++ {
 		for j := 0; j < sqrt; j++ {
-			workBuffer <- WorkItem{
+			workItem := WorkItem{
 				initialX: i * (imgWidth / sqrt),
 				finalX:   (i + 1) * (imgWidth / sqrt),
 				initialY: j * (imgHeight / sqrt),
 				finalY:   (j + 1) * (imgHeight / sqrt),
 			}
+			fmt.Println(workItem)
+			workBuffer <- workItem
 		}
 	}
 }
