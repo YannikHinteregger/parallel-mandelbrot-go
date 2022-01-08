@@ -1,6 +1,6 @@
 # Parallel Mandelbrot using Go
 
-This project features the computation and rendering of the Mandelbrot set to show off the concurrency capabilities of Rust. This code is based on the work of [this repository](https://github.com/GiselaMD/parallel-mandelbrot-go).
+This project features the computation and rendering of the Mandelbrot set to show off the concurrency capabilities of Go. This code is based on the work of [this repository](https://github.com/GiselaMD/parallel-mandelbrot-go).
 
 To run the project use `go run .`
 
