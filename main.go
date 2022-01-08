@@ -126,7 +126,6 @@ func workBufferInit(workBuffer chan WorkItem) {
 				initialY: j * (imgHeight / sqrt),
 				finalY:   (j + 1) * (imgHeight / sqrt),
 			}
-			fmt.Println(workItem)
 			workBuffer <- workItem
 		}
 	}
